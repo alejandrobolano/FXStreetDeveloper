@@ -1,23 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
+using Football.API.DataAccess;
 
 namespace Football.API.Controllers
 {
+    //TODO Can be better add Action in route like this /api/[controller]/[action]
     [Route("/api/[controller]")]
     [ApiController]
     public class StatisticsController : ControllerBase
     {
-        readonly FootballContext footballContext;
+        private readonly FootballContext _footballContext;
         public StatisticsController(FootballContext footballContext)
         {
-            this.footballContext = footballContext;
+            _footballContext = footballContext;
         }
 
         [HttpGet]
         [Route("yellowcards")]
-        public ActionResult GetYellowCards()
+        public async Task<ActionResult> GetYellowCards()
         {
-            throw new NotImplementedException();
+            return Ok("ok");
         }
 
         [HttpGet]

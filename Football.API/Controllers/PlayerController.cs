@@ -1,6 +1,7 @@
-﻿using Football.API.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Football.API.Common.Models;
+using Football.API.DataAccess;
 
 namespace Football.API.Controllers
 {
@@ -8,45 +9,57 @@ namespace Football.API.Controllers
     [ApiController]
     public class PlayerController : ControllerBase
     {
-        readonly FootballContext footballContext;
+        private readonly FootballContext _footballContext;
         public PlayerController(FootballContext footballContext)
         {
-            this.footballContext = footballContext;
+            _footballContext = footballContext;
         }
 
         [HttpGet]
         [Route("")]
-        public ActionResult<IEnumerable<Player>> Get()
+        public ActionResult<IEnumerable<PlayerResponse>> Get()
         {
-            return this.Ok(footballContext.Players);
+            return Ok(_footballContext.Players);
         }
 
         [HttpGet]
-        [Route("{id}", Name = "GetById")]
+        [Route("{id}")]
         public ActionResult GetById(int id)
         {
-            var response = footballContext.Players.Find(id);
+            var response = _footballContext.Players.Find(id);
             if (response == default)
-                this.NotFound();
-            return this.Ok();
+                return NotFound();
+            return Ok(response);
         }
 
         [HttpPost]
-        public ActionResult Post(Player player)
+        public ActionResult Post(PlayerResponse player)
         {
-            var response = footballContext.Players.Add(player).Entity;
-            return this.CreatedAtAction("GetById", response.Id, response);
+            var response = _footballContext.Players.Add(player).Entity;
+            return CreatedAtRoute( response.Id, response);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult Update(int id, Player player)
+        public ActionResult Update(int id, PlayerResponse player)
         {
-            if (footballContext.Players.Find(id) == default)
-                return this.NotFound();
+            if (_footballContext.Players.Find(id) == default)
+                return NotFound();
 
-            footballContext.Players.Update(player);        
-            return this.Ok();
+            _footballContext.Players.Update(player);        
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var player = _footballContext.Players.Find(id);
+            if (player == default)
+                return NotFound();
+
+            _footballContext.Players.Remove(player);
+            return Ok("Delete successful");
         }
     }
 }
