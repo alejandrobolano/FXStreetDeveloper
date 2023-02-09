@@ -1,6 +1,7 @@
-﻿using Football.API.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Football.API.Common.Models;
+using Football.API.DataAccess;
 
 namespace Football.API.Controllers
 {
@@ -8,45 +9,58 @@ namespace Football.API.Controllers
     [ApiController]
     public class RefereeController : ControllerBase
     {
-        readonly FootballContext footballContext;
+        private readonly FootballContext _footballContext;
         public RefereeController(FootballContext footballContext)
         {
-            this.footballContext = footballContext;
+            _footballContext = footballContext;
         }
 
         [HttpGet]
         [Route("")]
-        public ActionResult<IEnumerable<Referee>> Get()
+        public ActionResult<IEnumerable<RefereeResponse>> Get()
         {
-            return this.Ok(footballContext.Referees);
+            return Ok(_footballContext.Referees);
         }
 
         [HttpGet]
-        [Route("{id}", Name = "GetById")]
+        [Route("{id}")]
         public ActionResult GetById(int id)
         {
-            var response = footballContext.Referees.Find(id);
+            var response = _footballContext.Referees.Find(id);
             if (response == default)
-                this.NotFound();
-            return this.Ok();
+                return NotFound();
+            return Ok(response);
         }
 
         [HttpPost]
-        public ActionResult Post(Referee referee)
+        public ActionResult Post(RefereeResponse referee)
         {
-            var response = footballContext.Referees.Add(referee).Entity;
-            return this.CreatedAtAction("GetById", response.Id, response);
+            var response = _footballContext.Referees.Add(referee).Entity;
+            //TODO I have change CreatedAtAction by CreatedAtRoute
+            return CreatedAtRoute(response.Id, response);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult Update(int id, Referee referee)
+        public ActionResult Update(int id, RefereeResponse referee)
         {
-            if (footballContext.Referees.Find(id) == default)
-                return this.NotFound();
+            if (_footballContext.Referees.Find(id) == default)
+                return NotFound();
 
-            footballContext.Referees.Update(referee);        
-            return this.Ok();
+            _footballContext.Referees.Update(referee);        
+            return Ok(referee);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var referee = _footballContext.Referees.Find(id);
+            if (referee == default)
+                return NotFound();
+
+            _footballContext.Referees.Remove(referee);
+            return Ok("Delete successful");
         }
     }
 }

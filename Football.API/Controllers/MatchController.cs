@@ -1,6 +1,7 @@
-﻿using Football.API.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Football.API.Common.Models;
+using Football.API.DataAccess;
 
 namespace Football.API.Controllers
 {
@@ -8,45 +9,57 @@ namespace Football.API.Controllers
     [ApiController]
     public class MatchController : ControllerBase
     {
-        private readonly FootballContext footballContext;
+        private readonly FootballContext _footballContext;
         public MatchController(FootballContext footballContext)
         {
-            this.footballContext = footballContext;
+            _footballContext = footballContext;
         }
 
         [HttpGet]
         [Route("")]
-        public ActionResult<IEnumerable<Match>> Get()
+        public ActionResult<IEnumerable<MatchResponse>> Get()
         {
-            return this.Ok(footballContext.Matches);
+            return Ok(_footballContext.Matches);
         }
         
         [HttpGet]
-        [Route("{id}", Name = "GetById")]
+        [Route("{id}")]
         public ActionResult GetById(int id)
         {
-            var response = footballContext.Matches.Find(id);
+            var response = _footballContext.Matches.Find(id);
             if (response == default)
-                this.NotFound();
-            return this.Ok();
+                return NotFound();
+            return Ok(response);
         }
 
         [HttpPost]
-        public ActionResult Post(Match match)
+        public ActionResult Post(MatchResponse match)
         {
-            var response = footballContext.Matches.Add(match).Entity;
-            return this.CreatedAtAction("GetById", response.Id, response);
+            var response = _footballContext.Matches.Add(match).Entity;
+            return CreatedAtRoute(response.Id, response);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public ActionResult Update(int id, Match match)
+        public ActionResult Update(int id, MatchResponse match)
         {
-            if (footballContext.Matches.Find(id) == default)
-                return this.NotFound();
+            if (_footballContext.Matches.Find(id) == default)
+                return NotFound();
 
-            footballContext.Matches.Update(match);
-            return this.Ok();
+            _footballContext.Matches.Update(match);
+            return Ok(match);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var match = _footballContext.Matches.Find(id);
+            if (match == default)
+                return NotFound();
+
+            _footballContext.Matches.Remove(match);
+            return Ok("Delete successful");
         }
     }
 }

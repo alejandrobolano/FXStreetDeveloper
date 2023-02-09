@@ -5,7 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.11" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.2.1" />
+    <PackageReference Include="Quartz" Version="3.6.0" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.6.0" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Footbal.API.Common\Football.API.Common.csproj" />
+    <ProjectReference Include="..\Football.API.Business\Football.API.Business.csproj" />
+    <ProjectReference Include="..\Football.API.DataAccess\Football.API.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

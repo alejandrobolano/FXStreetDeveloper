@@ -1,33 +1,38 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Football.API.DataAccess;
+using Football.API.Extensions;
 
 namespace Football.API
 {
     public class Startup
     {
-        readonly IConfiguration Configuration;
+        public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
-            this.Configuration = configuration;
+            Configuration = configuration;
         }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FootballContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection") ?? string.Empty));
+            services.Configure<Properties>(options => Configuration.GetSection("Properties").Bind(options));
+            services.ConfigureRepositoryWrapper();
+            services.ConfigureLoggerService();
+            services.AddAutoMapper(typeof(Program));
+            services.AddControllers();
             services.AddMvc();
+            services.ConfigureSwagger(Configuration);
+            services.ConfigureServices();
+            
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -36,6 +41,18 @@ namespace Football.API
             }
 
             app.UseRouting();
+            app.UseHttpsRedirection();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+            });
         }
+
     }
 }

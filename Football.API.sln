@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.API", "Football.API\Football.API.csproj", "{E7F4098C-4C5C-4759-A104-60D0AE24ED30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Football.API", "Football.API\Football.API.csproj", "{E7F4098C-4C5C-4759-A104-60D0AE24ED30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.API.DataAccess", "Football.API.DataAccess\Football.API.DataAccess.csproj", "{F7E91121-8AAA-4D72-82CE-D117A438E7C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.API.Common", "Footbal.API.Common\Football.API.Common.csproj", "{89CBCA75-7C87-4083-80F9-360009A20A67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Football.API.Business", "Football.API.Business\Football.API.Business.csproj", "{551254F9-BE1D-437B-82E4-76DE2DDF6A43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{E7F4098C-4C5C-4759-A104-60D0AE24ED30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7F4098C-4C5C-4759-A104-60D0AE24ED30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7F4098C-4C5C-4759-A104-60D0AE24ED30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7E91121-8AAA-4D72-82CE-D117A438E7C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7E91121-8AAA-4D72-82CE-D117A438E7C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7E91121-8AAA-4D72-82CE-D117A438E7C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7E91121-8AAA-4D72-82CE-D117A438E7C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89CBCA75-7C87-4083-80F9-360009A20A67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89CBCA75-7C87-4083-80F9-360009A20A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89CBCA75-7C87-4083-80F9-360009A20A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89CBCA75-7C87-4083-80F9-360009A20A67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{551254F9-BE1D-437B-82E4-76DE2DDF6A43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{551254F9-BE1D-437B-82E4-76DE2DDF6A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{551254F9-BE1D-437B-82E4-76DE2DDF6A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{551254F9-BE1D-437B-82E4-76DE2DDF6A43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
