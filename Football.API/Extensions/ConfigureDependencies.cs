@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
+using Football.API.Business.Contracts;
+using Football.API.Business.Implementations;
 
 namespace Football.API.Extensions
 {
