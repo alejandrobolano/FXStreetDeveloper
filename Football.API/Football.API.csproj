@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Footbal.API.Common\Football.API.Common.csproj" />
+    <ProjectReference Include="..\Football.API.Business\Football.API.Business.csproj" />
     <ProjectReference Include="..\Football.API.DataAccess\Football.API.DataAccess.csproj" />
   </ItemGroup>
 

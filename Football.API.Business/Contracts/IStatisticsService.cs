@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Football.API.Common.Models;
 
 namespace Football.API.Business.Contracts
 {
-    internal interface IStatisticsService
+    public interface IStatisticsService
     {
-        public int GetYellowCards();
-        public int GetRedCards();
+        public List<CardResponse> GetYellowCards();
+        public List<CardResponse> GetRedCards();
     }
 }

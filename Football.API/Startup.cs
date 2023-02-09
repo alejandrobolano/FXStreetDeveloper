@@ -29,6 +29,8 @@ namespace Football.API
             services.AddControllers();
             services.AddMvc();
             services.ConfigureSwagger(Configuration);
+            services.ConfigureServices();
+            
         }
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

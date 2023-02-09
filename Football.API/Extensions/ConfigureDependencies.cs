@@ -40,5 +40,10 @@ namespace Football.API.Extensions
                 });
             });
         }
+
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddSingleton<IStatisticsService, StatisticsService>();
+        }
     }
 }

@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Footbal.API.Common\Football.API.Common.csproj" />
+  </ItemGroup>
+
 </Project>
