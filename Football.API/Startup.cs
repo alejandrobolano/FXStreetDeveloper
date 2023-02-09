@@ -21,7 +21,7 @@ namespace Football.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FootballContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection") ?? string.Empty));
             services.Configure<Properties>(options => Configuration.GetSection("Properties").Bind(options));
             services.ConfigureRepositoryWrapper();
             services.ConfigureLoggerService();
