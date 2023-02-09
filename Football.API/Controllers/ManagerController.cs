@@ -30,8 +30,26 @@ namespace Football.API.Controllers
         //TODO All Get's methods can be changed by GetAll(), this way will indicate that it result are lists
         public async Task<ActionResult<IEnumerable<ManagerResponse>>> Get()
         {
-            var managers = await _repository.ManagerRepository.GetAllAsync();
-            return Ok(managers);
+            try
+            {
+                var managers = await _repository.ManagerRepository.GetAllAsync();
+                return Ok(managers);
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                var className = GetType().Name;
+                var errorLine = new System.Diagnostics.StackFrame(0, true).GetFileLineNumber();
+                _logger.LogError($"Something went wrong inside the Get action. {dbUpdateException.Message}", className, errorLine);
+                return BadRequest(dbUpdateException.Message);
+            }
+            catch (Exception exception)
+            {
+                var className = GetType().Name;
+                var errorLine = new System.Diagnostics.StackFrame(0, true).GetFileLineNumber();
+                _logger.LogError($"Something went wrong inside the Get action. {exception.Message}", className, errorLine);
+                return StatusCode(500, "Internal server error");
+            }
+            
         }
 
         [HttpGet]
