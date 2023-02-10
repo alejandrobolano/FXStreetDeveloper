@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Football.API.DataAccess;
 using Football.API.Extensions;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Football.API
 {
@@ -17,7 +18,7 @@ namespace Football.API
         {
             Configuration = configuration;
         }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FootballContext>(options =>
@@ -30,9 +31,10 @@ namespace Football.API
             services.AddMvc();
             services.ConfigureSwagger(Configuration);
             services.ConfigureServices();
+            services.ConfigureCors();
             
         }
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -43,6 +45,11 @@ namespace Football.API
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthorization();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.All
+            });
+            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
